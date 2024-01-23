@@ -1,14 +1,21 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CountDown(props) {
     const [elapsed, setElapsed] = useState(0);
-    const timerRef = useRef(null);
-    const lastTickRef = useRef(null);
+
+    let timer = null;
+    let lastTick = null;
+
+    useEffect(() => {
+        return () => {
+            clearInterval(timer);
+        };
+    }, [timer]);
 
     const tick = () => {
         setElapsed((prevElapsed) => {
             const now = new Date();
-            const date = now - lastTickRef.current;
+            const date = now - lastTick;
             const updatedElapsed = prevElapsed + date;
 
             const remaining = props.seconds - updatedElapsed / 1000;
@@ -19,24 +26,24 @@ export default function CountDown(props) {
             return updatedElapsed;
         });
 
-        lastTickRef.current = new Date();
+        lastTick = new Date();
     };
 
     const pause = () => {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-        lastTickRef.current = null;
+        clearInterval(timer);
+        timer = null;
+        lastTick = null;
     };
 
     const resume = () => {
-        timerRef.current = setInterval(tick, 1000);
-        lastTickRef.current = new Date();
+        timer = setInterval(tick, 1000);
+        lastTick = new Date();
     };
 
     useEffect(() => {
         if (props.isPaused) {
             pause();
-        } else if (!timerRef.current) {
+        } else if (!timer) {
             resume();
         }
 
@@ -49,5 +56,5 @@ export default function CountDown(props) {
     const minutes = Math.floor(remaining / 60);
     const seconds = remaining % 60;
 
-    return <p className="countdown">{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</p>;
+    return <p className="inline-block">{("0" + minutes).slice(-2)}:{("0" + seconds).slice(-2)}</p>;
 }
