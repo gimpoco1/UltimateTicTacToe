@@ -1,0 +1,57 @@
+body {
+  font: 20px "Century Gothic", Futura, sans-serif;
+  margin: 2rem;
+}
+
+ol, ul {
+  padding-left: 1.5rem;
+}
+
+.board-row:after, .game-row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+.status {
+  margin-bottom: 1rem;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #999;
+  float: left;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 2rem;
+  height: 2rem;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.square:focus {
+  outline: none;
+}
+
+.kbd-navigation .square:focus {
+  background: #ddd;
+}
+
+
+.board {
+  border: 2px solid #999;
+  float: left;
+}
+
+.countdown {
+  display: inline-block;
+}
+
+.settings-label {
+  margin-left: 1.5rem;
+}
+
